@@ -3,3 +3,8 @@ langchain
 langchain-community
 langchain-openai
 openai
+streamlit
+PyPDF2
+langchain
+faiss-cpu
+transformers

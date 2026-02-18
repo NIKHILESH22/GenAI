@@ -2,87 +2,71 @@
 
 # st.title("Hello GenAI 🚀")
 # st.write("Streamlit is working!")
+
+
+
+
+
+# import streamlit as st
+# import requests
+
+# st.title("Simple Ollama App")
+
+# # User input
+# prompt = st.text_input("Enter your question:")
+
+# if st.button("Submit"):
+#     if prompt:
+#         response = requests.post(
+#             "http://localhost:11434/api/generate",
+#             json={
+#                 "model": "gemma2:2b",
+#                 "prompt": prompt,
+#                 "stream": False
+#             }
+#         )
+
+#         result = response.json()["response"]
+#         st.write("Response:")
+#         st.write(result)
+
+
+
 import streamlit as st
-from langchain_community.chat_models import ChatOllama
-from langchain_core.messages import HumanMessage
-from langchain_core.runnables import RunnableWithMessageHistory
-from langchain_core.chat_history import InMemoryChatMessageHistory
+import pandas as pd
+import numpy as np
 
-# -----------------------------
-# Page Config
-# -----------------------------
-st.set_page_config(page_title="GenAI Assistant", page_icon="🤖")
-st.title(":streamlit: 🤖 GenAI Assistant ")
-st.caption("Memory Enabled • Production Ready")
+st.write("my first streamlit project")
+st.write(":streamlit: NIKHILESH")
+st.text("lets start")
 
-# -----------------------------
-# Session State Setup
-# -----------------------------
-if "chat_history" not in st.session_state:
-    st.session_state.chat_history = []
+name=st.text_input("Enter name:")
+if st.button("GREET"):
+    st.success(f"Hello There ! {name}")
 
-if "store" not in st.session_state:
-    st.session_state.store = {}
+df=pd.DataFrame(np.random.randn(10,2),columns=['A','B'])
+st.line_chart(df)
+st.bar_chart(df)
 
-# -----------------------------
-# Memory Handler
-# -----------------------------
-def get_session_history(session_id: str):
-    if session_id not in st.session_state.store:
-        st.session_state.store[session_id] = InMemoryChatMessageHistory()
-    return st.session_state.store[session_id]
+st.sidebar.title("NAVIGATION")
+st.image("https://th.bing.com/th/id/OIP.WUbA5qz5Q91opWzsdHdBbgHaEA?w=331&h=180&c=7&r=0&o=7&pid=1.7&rm=3",caption="AGERA RS")
+st.video("https://youtu.be/Z1yGy9fELtE")
 
-# -----------------------------
-# LLM Setup
-# -----------------------------
-llm = ChatOllama(
-    model="gemma2:2b",
-    temperature=0.7,
-)
+st.title("abc Text and Markdown Demo")
+st.header("This is a header")
+st.subheader("This is a subheader")
+st.markdown("**Bold**, *Italic*, `Code`, [Link](https://streamlit.io)")
+st.code("for i in range(5): print(i)", language="python")
 
-chain = RunnableWithMessageHistory(
-    llm,
-    get_session_history,
-)
 
-# -----------------------------
-# Display Previous Messages
-# -----------------------------
-for role, message in st.session_state.chat_history:
-    with st.chat_message(role):
-        st.markdown(message)
+st.text_input("What's your name?")
+st.text_area("Write something...")
+st.number_input("Pick a number", min_value=0, max_value=100)
+st.slider("Choose a range", 0, 100)
+st.selectbox("Select a fruit", ["Apple", "Banana", "Mango"])
+st.multiselect("Choose toppings", ["Cheese", "Tomato", "Olives"])
+st.radio("Pick one", ["Option A", "Option B"])
+st.checkbox("I agree to the terms")
 
-# -----------------------------
-# Chat Input
-# -----------------------------
-if prompt := st.chat_input("Ask me anything..."):
-
-    # Show user message
-    st.session_state.chat_history.append(("user", prompt))
-    with st.chat_message("user"):
-        st.markdown(prompt)
-
-    # Generate response
-    with st.chat_message("assistant"):
-        response = chain.invoke(
-            [HumanMessage(content=prompt)],
-            config={"configurable": {"session_id": "default"}}
-        )
-        st.markdown(response.content)
-
-    st.session_state.chat_history.append(("assistant", response.content))
-
-# -----------------------------
-# Sidebar
-# -----------------------------
-with st.sidebar:
-    st.header("⚙ Settings")
-
-    if st.button("🗑 Clear Chat"):
-        st.session_state.chat_history = []
-        st.session_state.store = {}
-        st.rerun()
-
-    st.markdown("---")
-    st.write("Model: llama3 (Ollama)")
-    st.write("Memory: Enabled")
+if st.checkbox("Show Details"):
+    st.info("Here are more details...")
