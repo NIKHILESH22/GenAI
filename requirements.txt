@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 streamlit
 langchain
 langchain-community
@@ -8,3 +9,10 @@ PyPDF2
 langchain
 faiss-cpu
 transformers
+=======
+streamlit
+langchain
+langchain-community
+langchain-openai
+openai
+>>>>>>> 3a79c7d3e64dff42a97dfc42dd44ba64fc66f536
